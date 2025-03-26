@@ -17,7 +17,6 @@
     <Folder Include="Interface\" />
     <Folder Include="MappingProfiles\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
