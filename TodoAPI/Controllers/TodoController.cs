@@ -52,5 +52,29 @@ namespace TodoAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateTodoAsync(Guid id, UpdateTodoRequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var todo = await _todoServices.GetByIdAsync(id);
+                if(todo is null )
+                {
+                    return NotFound(new { message = $"Todo item with id: {id} not found" });
+                }
+
+                await _todoServices.UpdateTodoAsync(id, request);
+                return Ok(new { message = $"Todo item with id: {id} updated successfully" });
+            }catch(Exception ex)
+            {
+                return StatusCode(500, new {message = $"An error occurred while updating blog post with id {id}", error = ex.Message });
+            }
+        }
     }
 }

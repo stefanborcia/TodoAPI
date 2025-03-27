@@ -12,7 +12,7 @@ using TodoAPI.AppDataContext;
 namespace TodoAPI.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20250327103636_InitialCreate")]
+    [Migration("20250327142116_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -38,10 +38,10 @@ namespace TodoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("IsComplete")
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsCompleted")
+                    b.Property<bool>("IsComplete")
                         .HasColumnType("bit");
 
                     b.Property<int>("Priority")
