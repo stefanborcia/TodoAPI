@@ -56,7 +56,7 @@ namespace TodoAPI.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateTodoAsync(Guid id, UpdateTodoRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -64,16 +64,30 @@ namespace TodoAPI.Controllers
             try
             {
                 var todo = await _todoServices.GetByIdAsync(id);
-                if(todo is null )
+                if (todo is null)
                 {
                     return NotFound(new { message = $"Todo item with id: {id} not found" });
                 }
 
                 await _todoServices.UpdateTodoAsync(id, request);
                 return Ok(new { message = $"Todo item with id: {id} updated successfully" });
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
-                return StatusCode(500, new {message = $"An error occurred while updating blog post with id {id}", error = ex.Message });
+                return StatusCode(500, new { message = $"An error occurred while updating blog post with id {id}", error = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteTodoAsync(Guid id)
+        {
+            try
+            {
+                await _todoServices.DeleteTodoAsync(id);
+                return Ok(new { message = $"Todo with id {id} successfully deleted" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred while deleting Todo Item with id {id}", error = ex.Message });
             }
         }
     }
