@@ -9,6 +9,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
+// Apply database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var dbContext = serviceProvider.GetRequiredService<TodoDbContext>();
+    
+    //apply migrations
+    dbContext.Database.Migrate(); 
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -17,7 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseExceptionHandler();
 app.UseAuthorization();
 
 app.MapControllers();
