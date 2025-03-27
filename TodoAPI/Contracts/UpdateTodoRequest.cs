@@ -10,7 +10,7 @@ namespace TodoAPI.Contracts
         [StringLength(500)]
         public string? Description { get; set; }
 
-        public bool? IsCompleted { get; set; }
+        public bool? IsComplete { get; set; }
         public DateTime? DueDate { get; set; }
 
         [Range(1, 5)]
@@ -18,7 +18,7 @@ namespace TodoAPI.Contracts
 
         public UpdateTodoRequest()
         {
-            IsCompleted = false;
+            IsComplete = false;
         }
     }
 }

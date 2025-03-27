@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TodoAPI.AppDataContext;
+using TodoAPI.Interface;
 using TodoAPI.Middleware;
+using TodoAPI.Models;
+using TodoAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+builder.Services.Configure<DbSettings>(builder.Configuration.GetSection("DbSettings")); 
+builder.Services.AddSingleton<TodoDbContext>();
 builder.Services.AddProblemDetails();
 
 // Adding of login 
@@ -21,6 +26,7 @@ builder.Services.AddLogging();
 //Automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<ITodoServices, TodoServices>();
 var app = builder.Build();
 
 
